@@ -19,19 +19,62 @@ class IndexHandler(tornado.web.RequestHandler):
 class SearchFileHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('''
-        <html>
-          <head><title>Search File</title></head>
-          <body>
-            <form action='search' method='post'>
-            search: <input type="text" name="search_text"/>
-            <br>
-            <input type='submit' value='搜索'/>
-            </form>
-          </body>
-        </html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap</title>
+
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+        <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">search</li>
+        </ol>
+        <form action='search' method='post'>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                <input type="text" name="search_text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">搜索</button>
+                </span>
+                </div><!-- /input-group -->
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+         </form>
+          <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
         ''')
 
     def post(self):
+        self.write('''
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap</title>
+
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+  <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">result</li>
+        </ol>''')
         search_text = self.get_argument("search_text")
         sql = "select timestamp,text,filename from data where text like '%%%s%%'" % (search_text)
         cursor = conn.execute(sql)
@@ -41,24 +84,52 @@ class SearchFileHandler(tornado.web.RequestHandler):
             self.write("text:%s" % (row[1]))
             self.write("<br>")
             self.write("filename:%s" % (row[2]))
-            self.write('<img src="/static/%s">' % (row[2]))
+            self.write('<img src="/static/%s" class="img-responsive">' % (row[2]))
             self.write("<br>")
+        self.write('''
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
+        ''')
 
 
 class UploadFileHandler(tornado.web.RequestHandler):
     def get(self):
         self.write('''
-        <html>
-          <head><title>Upload File</title></head>
-          <body>
+        <!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap</title>
+
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+  <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">upload</li>
+        </ol>
+        <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
             <form action='upload' enctype="multipart/form-data" method='post'>
             <input type='file' name='file'/><br/>
-            <textarea rows="4" cols="50" name="comment">请在此处输入文本...</textarea>
+            <textarea rows="4" cols="50" name="comment" placeholder="请在此处输入文本..."></textarea>
             <br>
-            <input type='submit' value='上传'/>
+            <button type='submit' class='btn btn-primary'>上传</button>
             </form>
-          </body>
-        </html>
+        </div>
+        <div class="col-sm-4"></div>
+        </div>
+          <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
         ''')
 
     def post(self):
