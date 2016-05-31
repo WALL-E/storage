@@ -8,7 +8,15 @@ import uuid
 import time
 import sqlite3
 
+import time
+import datetime
+
+
 conn = sqlite3.connect('data.db')
+
+
+def date_format(time):
+    return datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%d %H:%M:%S")
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -78,14 +86,17 @@ class SearchFileHandler(tornado.web.RequestHandler):
         search_text = self.get_argument("search_text")
         sql = "select timestamp,text,filename from data where text like '%%%s%%'" % (search_text)
         cursor = conn.execute(sql)
+        self.write("""<table class="table table-hover">""")
+        self.write("""<tr>""")
         for row in cursor:
-            self.write("timestamp:%s" % (row[0]))
+            self.write("timestamp:%s" % (date_format(row[0])))
             self.write("<br>")
-            self.write("text:%s" % (row[1]))
+            self.write("info:%s" % (row[1]))
             self.write("<br>")
-            self.write("filename:%s" % (row[2]))
-            self.write('<img src="/static/%s" class="img-responsive">' % (row[2]))
+            self.write('<img src="/static/%s" class="img-responsive img-rounded">' % (row[2]))
             self.write("<br>")
+        self.write("""</tr>""")
+        self.write("""</table>""")
         self.write('''
         <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
@@ -157,6 +168,7 @@ class UploadFileHandler(tornado.web.RequestHandler):
             conn.execute(sql)
             conn.commit()
         self.write('{"status":200, "message":"ok", "result":%s}' % (file_list))
+        self.redirect('/', permanent=True)
 
 
 app = tornado.web.Application([
