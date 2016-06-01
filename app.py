@@ -91,7 +91,6 @@ class UploadFileHandler(tornado.web.RequestHandler):
                 up.write(meta['body'])
             sql = ("INSERT INTO data (timestamp,text,filename) VALUES (%s, '%s', '%s')"
                 % (int(time.time()), comment, filename))
-            print sql
             conn.execute(sql)
             conn.commit()
         self.write('{"status":200, "message":"ok", "result":%s}' % (file_list))
