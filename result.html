@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <title>秋雨收纳-结果</title>
+{% end %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">result</li>
+  </ol>
+  <table class="table table-hover">
+    {% for result in results %}
+    <tr>
+      <td>
+        <span class="label label-primary">记录时间</span>
+        {{ result[0] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class="label label-primary">照片信息</span>
+        {{ result[1] }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src = "/static/{{result[2]}}"} class="img-responsive img-rounded">
+      </td>
+    </tr>
+    {% end %}
+  </table>
+{% end %}

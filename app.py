@@ -27,43 +27,10 @@ class SearchFileHandler(tornado.web.RequestHandler):
         self.render('search.html')
 
     def post(self):
-        self.write('''
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap</title>
-
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  </head>
-  <body>
-  <ol class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li class="active">result</li>
-        </ol>''')
         search_text = self.get_argument("search_text")
         sql = "select timestamp,text,filename from data where text like '%%%s%%'" % (search_text)
         cursor = conn.execute(sql)
-        self.write("""<table class="table table-hover">""")
-        self.write("""<tr>""")
-        for row in cursor:
-            self.write("timestamp:%s" % (date_format(row[0])))
-            self.write("<br>")
-            self.write("info:%s" % (row[1]))
-            self.write("<br>")
-            self.write('<img src="/static/%s" class="img-responsive img-rounded">' % (row[2]))
-            self.write("<br>")
-        self.write("""</tr>""")
-        self.write("""</table>""")
-        self.write('''
-        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-  </body>
-</html>
-        ''')
+        self.render('result.html', results=cursor)
 
 
 class UploadFileHandler(tornado.web.RequestHandler):
