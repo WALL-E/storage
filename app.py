@@ -83,7 +83,7 @@ class UploadFileHandler(tornado.web.RequestHandler):
         comment = self.get_argument("comment")
         for meta in file_metas:
             file_count = file_count + 1
-            filename = str(uuid.uuid4()) + "_" + meta['filename']
+            filename = str(uuid.uuid4())
             file_list.append(filename)
             filepath = os.path.join(upload_path, filename)
             # 有些文件需要已二进制的形式存储，实际中可以更改
