@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <title>秋雨收纳-搜索</title>
+{% end %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li>
+      <a href="/">主页</a>
+    </li>
+    <li class="active">记录</li>
+  </ol>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <form action='upload' enctype="multipart/form-data" method='post'>
+        <input type='file' name='file'/>
+        <br/>
+        <textarea rows="4" cols="50" name="comment" placeholder="请在此处输入文本..."></textarea>
+        <br>
+        <button type='submit' class='btn btn-primary'>记录</button>
+      </form>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+{% end %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <title>秋雨收纳-搜索</title>
+{% end %}
+
+{% block body %}
+  <ol class="breadcrumb">
+    <li>
+      <a href="/">主页</a>
+    </li>
+    <li class="active">搜索</li>
+  </ol>
+  <form action='search' method='post'>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input type="text" name="search_text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">搜索</button>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>
+  </form>
+{% end %}
