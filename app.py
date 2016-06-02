@@ -30,7 +30,7 @@ class SearchFileHandler(tornado.web.RequestHandler):
         search_text = self.get_argument("search_text")
         sql = "select timestamp,text,filename from data where text like '%%%s%%'" % (search_text)
         cursor = conn.execute(sql)
-        self.render('result.html', results=cursor)
+        self.render('result.html', results=cursor, date_format=date_format)
 
 
 class UploadFileHandler(tornado.web.RequestHandler):
